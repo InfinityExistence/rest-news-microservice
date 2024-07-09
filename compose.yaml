@@ -1,0 +1,19 @@
+name: news
+volumes:
+  news_data:
+services:
+  pgdb:
+    restart: always
+    image: postgres
+    env_file: pgdb.env
+    volumes:
+      - news_data:/var/lib/postgresql/data
+  news_service:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - '3003:3003'
+    depends_on:
+      - pgdb
+    env_file: news.env
