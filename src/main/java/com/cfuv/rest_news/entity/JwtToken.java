@@ -1,6 +1,8 @@
 package com.cfuv.rest_news.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,9 +11,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 @AllArgsConstructor
-public class JwtUser implements Authentication {
-    List<String> roles;
+public class JwtToken implements Authentication {
+    private List<String> roles;
+
     private final String ROLE_PREFIX = "ROLE_";
 
     @Override
@@ -46,7 +51,6 @@ public class JwtUser implements Authentication {
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
 
     }
-
 
     @Override
     public String getName() {
