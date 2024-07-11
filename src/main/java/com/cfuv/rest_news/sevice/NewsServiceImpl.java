@@ -4,10 +4,7 @@ import com.cfuv.rest_news.dao.NewsRepository;
 import com.cfuv.rest_news.entity.News;
 import com.cfuv.rest_news.entity.pages.PageCustom;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +20,7 @@ public class NewsServiceImpl implements NewsService {
 
     public List<News> getLatestNews() {
 
-        return newsRepository.getLatestNews();
+        return newsRepository.findTop3ByOrderByTimestampDesc();
 
     }
 
@@ -31,7 +28,7 @@ public class NewsServiceImpl implements NewsService {
     public PageCustom<News> findNewsByTitleOrArticle(int p, String text) {
         Pageable pageable = PageRequest.of(p, PAGE_SIZE)
                 .withSort(Sort.by("timestamp").descending());
-        Page<News> news = newsRepository.findNewsByTitleOrArticle(text.toUpperCase(), pageable);
+        Page<News> news = newsRepository.findNewsByTitleContainingOrArticleContainingAllIgnoreCase(text,text, pageable);
         return new PageCustom<>(news);
     }
 
