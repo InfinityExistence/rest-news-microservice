@@ -1,6 +1,5 @@
 package com.cfuv.rest_news.config;
 
-import com.cfuv.rest_news.entity.JwtToken;
 import com.cfuv.rest_news.secure.JwtDecoder;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
